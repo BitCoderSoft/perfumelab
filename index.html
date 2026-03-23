@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfume Lab Pro (IndexedDB)</title>
+<title>Perfume Lab Pro</title>
 
+
+<!-- ================= CSS ================= -->
 <style>
 body { font-family: 'Segoe UI', Arial; margin: 20px; background:#f5f7fa; }
 h2 { margin-bottom:5px; }
@@ -120,6 +122,7 @@ tr:hover { background:#fafafa; }
 <h2>PERFUME LAB PRO</h2>
 <div class="subtitle">Sistema de cadastro de Materiais e Fórmulas para Perfumes - by Erisvaldo Correia</div>
 
+<!-- ================= MENNU TABS ================= -->
 <div class="tabs">
   <div class="tab active" onclick="showTab(event,'home')">Home</div>
   <div class="tab" onclick="showTab(event,'materials')">Matérias-primas</div>
@@ -258,6 +261,8 @@ tr:hover { background:#fafafa; }
   <button onclick="document.getElementById('importFile').click()">Importar Backup</button>
 </div>
 
+
+<!-- ================= FUNÇÕES ================= -->
 <script>
 let db;
 let formula = [];
@@ -380,25 +385,6 @@ function addToFormula() {
 
   renderFormula();
 }
-
-// function renderFormula() {
-//   const tbody = document.getElementById('formulaTable');
-//   tbody.innerHTML = '';
-//   const total = formula.reduce((sum, f) => sum + f.weight, 0);
-
-//   formula.forEach((f, i) => {
-//     const perc = total ? (f.weight / total * 100).toFixed(2) : 0;
-//     const parts = total ? (f.weight / total * 1000).toFixed(0) : 0;
-
-//     tbody.innerHTML += `<tr>
-//       <td>${f.material}</td>
-//       <td><input type="number" step="0.01" value="${f.weight}" onchange="updateWeight(${i}, this.value)"></td>
-//       <td>${perc}</td>
-//       <td>${parts}</td>
-//       <td><button class='danger' onclick="removeItem(${i})">Excluir</button></td>
-//     </tr>`;
-//   });
-// }
 
 function renderFormula() {
   const tbody = document.getElementById('formulaTable');
