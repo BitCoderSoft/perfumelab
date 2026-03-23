@@ -110,6 +110,74 @@ tr:hover { background:#fafafa; }
 .notice { background:#fff3cd; padding:15px; border-radius:8px; margin-bottom:15px; }
 .information { background:#cddeed; padding:15px; border-radius:8px; margin-bottom:15px; }
 
+.info-box {
+  background-color: #eef4ff !important;
+  color: #333 !important;
+  padding: 20px !important;
+  border-radius: 10px !important;
+  margin-top: 25px !important;
+  display: block;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode {
+  background:#1e1e1e;
+  color:#e0e0e0;
+}
+
+body.dark-mode .section {
+  background:#2a2a2a;
+}
+
+body.dark-mode .tab {
+  background:#3a3a3a;
+  color:#ddd;
+}
+
+body.dark-mode .active {
+  background:#2a2a2a;
+  border-bottom:2px solid #2a2a2a;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background:#3a3a3a;
+  color:#fff;
+  border:1px solid #555;
+}
+
+body.dark-mode table {
+  color:#ddd;
+}
+
+body.dark-mode th {
+  background:#3a3a3a;
+}
+
+body.dark-mode td {
+  border-bottom:1px solid #444;
+}
+
+body.dark-mode tr:hover {
+  background:#333;
+}
+
+body.dark-mode .notice {
+  background:#8c751a;
+  color:#fff;
+}
+
+body.dark-mode .information {
+  background:#1f3a4a;
+  color:#fff;
+}
+
+body.dark-mode .info-box {
+  background-color: #1e2a3a !important;
+  color: #e0e6ed !important;
+}
+
 @media (max-width:600px){
   body { margin:10px; }
   h2 { font-size:20px; }
@@ -119,7 +187,8 @@ tr:hover { background:#fafafa; }
 </style>
 </head>
 
-<body>
+<!-- ------------------- CORPO CODIGO ------------------- -->
+<body class="dark-mode">
 
   <div id="updateBanner" style="
   display:none;
@@ -148,7 +217,10 @@ tr:hover { background:#fafafa; }
   </button>
 </div>
 
-<h2 style="margin-bottom:25px; color:#4a90e2;">PERFUME RECIPE CAD (Beta version)</h2>
+<h2 style="margin-bottom:25px; color:#4a90e2;">PERFUME RECIPE CAD</h2>
+<div style="position:absolute; top:20px; right:20px;">
+  <button onclick="toggleTheme()">☀️ / 🌙</button>
+</div>
 
 <!-- ================= MENNU TABS ================= -->
 <div class="tabs">
@@ -164,7 +236,7 @@ tr:hover { background:#fafafa; }
     
     <div style="width:75%; text-align:center;">
       
-      <h1 style="color:#4a90e2;">Perfume Recipe Cad</h1>
+      <h1 style="color:#4a90e2;">Perfume Recipe Cad (Beta version)</h1>
 
       <div class="subtitle">Sistema de cadastro de Materiais e Fórmulas para Perfumes - by Erisvaldo Correia</div>
 
@@ -172,24 +244,26 @@ tr:hover { background:#fafafa; }
         Facilitando a vida do perfumista na hora de cadastrar e gerenciar suas formulas de estudoo.
       </p>
 
-      <div style="background:#eef4ff; padding:20px; border-radius:10px; margin-top:25px;">
+      <div class="info-box">
         O Perfume Lab Pro foi criado para oferecer praticidade, organização e precisão no desenvolvimento de fragrâncias. 
         Com ele, o perfumista consegue registrar matérias-primas, montar fórmulas detalhadas e manter um histórico confiável 
         de suas criações, tornando o processo criativo mais eficiente e profissional.
       </div>
 
       <div class="notice" style="margin-top:15px;">
-        <b>Nota da Versão 1.0.5:</b> Cadastrar materiais (nome, diluição, data de vailidade e categoria). Cadastrar formúla usando os
+        <b>Nota da Versão 1.0.6:</b> Cadastrar materiais (nome, diluição, data de vailidade e categoria). Cadastrar formúla usando os
         materiais. Salvar a formúla ou exportar como pdf. Visualizar a construção da formúla por tipo de presença na pirâmide 
         olfativa. Carregar a formúla salva. Realizar bacukp de segurança local
         para nao perder os dados.
-        <br/>
+        <br/> <br/>
         Instalação local em formato de aplicativo quando estiver em dispositivo movél. Esse formato permite o usuário utilizar a aplicação
         mesmo estando offline.
+        <br/> <br/>
+        Seleção de Preferência de Cor no Tema da aplicação!
       </div>
 
       <div style="margin-top:45px; font-size:12px; color:#777;">
-        © Erisvaldo Correia - 2026 - Versão 1.0.5
+        © Erisvaldo Correia - 2026 - Versão 1.0.6
       </div>
 
     </div>
@@ -313,6 +387,24 @@ request.onsuccess = function(e) {
   db = e.target.result;
   renderMaterials();
   renderSaved();
+};
+
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
+
+  const isDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem("themePerfumeRecipe", isDark ? "dark" : "light");
+}
+
+window.onload = function() {
+  const saved = localStorage.getItem("themePerfumeRecipe");
+
+  // padrão = claro
+  if (saved === "dark") {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
 };
 
 function showTab(evt, tab) {
