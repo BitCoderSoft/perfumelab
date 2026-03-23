@@ -1,4 +1,4 @@
-const CACHE_NAME = "perfume-recipe-cad-v1";
+const CACHE_NAME = "perfume-recipe-cad-v1.0.5";
 
 const urlsToCache = [
   "./",
@@ -6,8 +6,10 @@ const urlsToCache = [
   "./manifest.json"
 ];
 
-// Instalação
+// ================= INSTALAÇÃO =================
 self.addEventListener("install", event => {
+  console.log("Service Worker instalando...");
+
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -15,24 +17,33 @@ self.addEventListener("install", event => {
         return cache.addAll(urlsToCache);
       })
   );
+
+  // 🔥 Permite que a nova versão fique pronta imediatamente
+  self.skipWaiting();
 });
 
-// Ativação (limpa cache antigo)
+// ================= ATIVAÇÃO =================
 self.addEventListener("activate", event => {
+  console.log("Service Worker ativado");
+
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
         keys.map(key => {
           if (key !== CACHE_NAME) {
+            console.log("Removendo cache antigo:", key);
             return caches.delete(key);
           }
         })
       );
     })
   );
+
+  // 🔥 Assume controle imediatamente
+  return self.clients.claim();
 });
 
-// Intercepta requisições
+// ================= FETCH =================
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request)
@@ -40,4 +51,12 @@ self.addEventListener("fetch", event => {
         return response || fetch(event.request);
       })
   );
+});
+
+// ================= RECEBER COMANDO DO APP =================
+self.addEventListener("message", event => {
+  if (event.data && event.data.action === "skipWaiting") {
+    console.log("Atualizando para nova versão...");
+    self.skipWaiting();
+  }
 });
