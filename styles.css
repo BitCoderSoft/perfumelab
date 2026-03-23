@@ -1,0 +1,176 @@
+
+/* ================= CSS ================= */
+body { font-family: 'Segoe UI', Arial; margin: 20px; background:#f5f7fa; }
+h2 { margin-bottom:5px; }
+.subtitle { color:#4a90e2; margin-bottom:15px; }
+
+.tabs { display:flex; flex-wrap:wrap; gap:5px; }
+
+.tab {
+  cursor: pointer;
+  padding: 10px 15px;
+  background: #e0e3e8;
+  border-radius: 8px 8px 0 0;
+}
+
+.active { background: #ffffff; border-bottom:2px solid white; }
+
+.section {
+  display: none;
+  background:white;
+  padding:20px;
+  border-radius:0 8px 8px 8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.form-row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.form-group {
+  display:flex;
+  flex-direction:column;
+  flex:1 1 150px;
+}
+
+.group-header {
+  background-color: #d9f2ff; /* azul claro */
+}
+
+.group-header td {
+  padding: 10px;
+  font-weight: bold;
+}
+
+label {
+  font-size:12px;
+  margin-bottom:4px;
+  color:#555;
+}
+
+input, select {
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+button {
+  border:none;
+  background:#4a90e2;
+  color:white;
+  cursor:pointer;
+  padding:10px;
+  border-radius:6px;
+}
+button:hover { background:#357bd8; }
+button.danger { background:#e74c3c; }
+
+.full {
+  width:100%;
+  margin-top:8px;
+}
+
+.table-wrapper { overflow-x:auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size:14px;
+  min-width:600px;
+}
+
+th { background:#f0f2f5; text-align:left; padding:10px; }
+td { padding:10px; border-bottom:1px solid #eee; }
+tr:hover { background:#fafafa; }
+
+.category-row td { font-weight:600; }
+.category-citrico td{ background:#fff4e6; color:#a05a00; }
+.category-floral td{ background:#fde6f2; color:#a0005a; }
+.category-amadeirado td{ background:#efe6dc; color:#6b4f2a; }
+.category-musk td{ background:#f0e6ff; color:#5a3aa0; }
+.category-ambarado td{ background:#fff1cc; color:#a06a00; }
+.category-gourmand td{ background:#fbead9; color:#a0522d; }
+.category-aromatico td{ background:#e6f7f1; color:#1f7a63; }
+.category-verde td{ background:#e6fbe6; color:#2d7a2d; }
+
+.notice { background:#fff3cd; padding:15px; border-radius:8px; margin-bottom:15px; }
+.information { background:#cddeed; padding:15px; border-radius:8px; margin-bottom:15px; }
+
+.info-box {
+  background-color: #eef4ff !important;
+  color: #333 !important;
+  padding: 20px !important;
+  border-radius: 10px !important;
+  margin-top: 25px !important;
+  display: block;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode {
+  background:#1e1e1e;
+  color:#e0e0e0;
+}
+
+body.dark-mode .section {
+  background:#2a2a2a;
+}
+
+body.dark-mode .tab {
+  background:#3a3a3a;
+  color:#ddd;
+}
+
+body.dark-mode .active {
+  background:#2a2a2a;
+  border-bottom:2px solid #2a2a2a;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background:#3a3a3a;
+  color:#fff;
+  border:1px solid #555;
+}
+
+body.dark-mode table {
+  color:#ddd;
+}
+
+body.dark-mode th {
+  background:#3a3a3a;
+}
+
+body.dark-mode td {
+  border-bottom:1px solid #444;
+}
+
+body.dark-mode tr:hover {
+  background:#333;
+}
+
+body.dark-mode .notice {
+  background:#8c751a;
+  color:#fff;
+}
+
+body.dark-mode .information {
+  background:#1f3a4a;
+  color:#fff;
+}
+
+body.dark-mode .info-box {
+  background-color: #1e2a3a !important;
+  color: #e0e6ed !important;
+}
+
+@media (max-width:600px){
+  body { margin:10px; }
+  h2 { font-size:20px; }
+  .subtitle { font-size:14px; }
+  th, td { font-size:12px; }
+}
