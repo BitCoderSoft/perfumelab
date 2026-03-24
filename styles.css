@@ -6,6 +6,14 @@ h2 { margin-bottom:5px; }
 
 .tabs { display:flex; flex-wrap:wrap; gap:5px; }
 
+.tab .icon {
+  display: none;
+}
+
+.tab .label {
+  display: inline;
+}
+
 .tab {
   cursor: pointer;
   padding: 10px 15px;
@@ -109,6 +117,10 @@ tr:hover { background:#fafafa; }
   display: block;
 }
 
+.div-card-home {
+  width:70%; text-align:center;
+}
+
 /* ================= DARK MODE ================= */
 
 body.dark-mode {
@@ -168,9 +180,23 @@ body.dark-mode .info-box {
   color: #e0e6ed !important;
 }
 
+
+/* ================= MOBILE ================= */
 @media (max-width:600px){
   body { margin:10px; }
   h2 { font-size:20px; }
   .subtitle { font-size:14px; }
   th, td { font-size:12px; }
+  .tab .icon {
+    display: inline;
+    font-size: 20px;
+  }
+
+  .tab .label {
+    display: none;
+  }
+
+  .div-card-home {
+    width:90%; text-align:center;
+  }
 }

@@ -46,17 +46,32 @@
 
 <!-- ================= MENNU TABS ================= -->
 <div class="tabs">
-  <div class="tab active" onclick="showTab(event,'home')">Home</div>
-  <div class="tab" onclick="showTab(event,'materials')">Materiais</div>
-  <div class="tab" onclick="showTab(event,'formula')">Fórmula</div>
-  <div class="tab" onclick="showTab(event,'backup')">Backup</div>
+  <div class="tab active" onclick="showTab(event,'home')">
+    <span class="icon">🏠</span>
+    <span class="label">Home</span>
+  </div>
+
+  <div class="tab" onclick="showTab(event,'materials')">
+    <span class="icon">🧪</span>
+    <span class="label">Materiais</span>
+  </div>
+
+  <div class="tab" onclick="showTab(event,'formula')">
+    <span class="icon">📊</span>
+    <span class="label">Fórmula</span>
+  </div>
+
+  <div class="tab" onclick="showTab(event,'backup')">
+    <span class="icon">💾</span>
+    <span class="label">Backup</span>
+  </div>
 </div>
 
 <!-- ================= HOME ================= -->
 <div id="home" class="section" style="display:block;">
   <div class="home-container" style="display:flex; justify-content:center;">
     
-    <div style="width:75%; text-align:center;">
+    <div class="div-card-home">
       
       <h1 style="color:#4a90e2;">Perfume Recipe Cad (Beta version)</h1>
 
