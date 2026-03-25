@@ -1,4 +1,4 @@
-const CACHE_NAME = "perfume-recipe-cad-v1.0.6";
+const CACHE_NAME = "perfume-recipe-cad-v1.1.0";
 
 const urlsToCache = [
   "./",

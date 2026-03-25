@@ -82,13 +82,13 @@
       </p>
 
       <div class="info-box">
-        O Perfume Lab Pro foi criado para oferecer praticidade, organização e precisão no desenvolvimento de fragrâncias. 
+        O Perfume Recipe Cad foi criado para oferecer praticidade, organização e precisão no desenvolvimento de fragrâncias. 
         Com ele, o perfumista consegue registrar matérias-primas, montar fórmulas detalhadas e manter um histórico confiável 
         de suas criações, tornando o processo criativo mais eficiente e profissional.
       </div>
 
       <div class="notice" style="margin-top:15px;">
-        <b>Nota da Versão 1.0.6:</b> Cadastrar materiais (nome, diluição, data de vailidade e categoria). Cadastrar formúla usando os
+        <b>Nota da Versão 1.1.0:</b> Cadastrar materiais (nome, diluição, data de vailidade e categoria). Cadastrar formúla usando os
         materiais. Salvar a formúla ou exportar como pdf. Visualizar a construção da formúla por tipo de presença na pirâmide 
         olfativa. Carregar a formúla salva. Realizar bacukp de segurança local
         para nao perder os dados.
@@ -100,7 +100,7 @@
       </div>
 
       <div style="margin-top:45px; font-size:12px; color:#777;">
-        © Erisvaldo Correia - 2026 - Versão 1.0.6
+        © Erisvaldo Correia - 2026 - Versão 1.1.0
       </div>
 
     </div>
@@ -160,14 +160,18 @@
   <div class="information">
     Inclua cada elemento, selecionando sua ordem na pirâmide olfativa e quantidade em gramas utillizada!
   </div>
+  
   <div class="form-row">
     <select id="noteSelect">
       <option value="topo">Nota de Topo</option>
       <option value="meio">Nota de Meio</option>
       <option value="fundo">Nota de Fundo</option>
     </select>
+
     <select id="materialSelect"></select>
+
     <input id="weight" type="number" step="0.01" placeholder="g" />
+
     <button onclick="addToFormula()">Adicionar</button>
   </div>
 
@@ -176,9 +180,11 @@
       <thead>
         <tr>
           <th>Material</th>
-          <th>g</th>
-          <th>%</th>
+          <th>(g)</th>
+          <th>% (g)</th>
           <th>Partes (1000)</th>
+          <th>RAW (g)</th> <!-- NOVO -->
+          <th>% REAL</th> <!-- NOVO -->
           <th>Ações</th>
         </tr>
       </thead>

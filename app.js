@@ -1,5 +1,6 @@
 let db;
 let formula = [];
+let materials = [];
 let currentFormulaName = "";
 
 const request = indexedDB.open("PerfumeDB", 1);
@@ -90,6 +91,8 @@ function renderMaterials() {
         return a.name.localeCompare(b.name);
       });
 
+      materials = items;
+
       let currentCat = '';
 
       const classMap = {
@@ -112,7 +115,7 @@ function renderMaterials() {
 
         const display = formatMaterialName(m);
         tbody.innerHTML += `<tr><td>${display}</td><td><button class='danger' onclick="removeMaterial(${m.id})">Excluir</button></td></tr>`;
-        select.innerHTML += `<option>${m.name} (${m.dilution}%)</option>`;
+        select.innerHTML += `<option value="${m.id}">${m.name} (${m.dilution}%)</option>`;
       });
     }
   };
@@ -126,16 +129,33 @@ function removeMaterial(id) {
 
 function addToFormula() {
   const note = document.getElementById('noteSelect').value;
-  const material = document.getElementById('materialSelect').value;
+
+  const select = document.getElementById('materialSelect');
+  const materialId = parseInt(select.value);
+  const materialName = select.options[select.selectedIndex].text;
+
   const weightInput = document.getElementById('weight');
   const weight = parseFloat(weightInput.value);
 
-  if (!weight) return;
+  console.log("SELECT VALUE:", select.value);
+console.log("PARSED ID:", materialId);
 
-  formula.push({ material, weight, note });
+  if (!weight || isNaN(materialId)) return;
+
+  formula.push({
+    materialId,
+    materialName,
+    weight,
+    note
+  });
+
   weightInput.value = '';
 
   renderFormula();
+}
+
+function getMaterialById(id) {
+  return materials.find(m => m.id === id);
 }
 
 function renderFormula() {
@@ -143,6 +163,14 @@ function renderFormula() {
   tbody.innerHTML = '';
 
   const total = formula.reduce((sum, f) => sum + f.weight, 0);
+
+  // 🔥 total de matéria pura
+  const totalRaw = formula.reduce((sum, f) => {
+    const mat = getMaterialById(f.materialId);
+    const dilution = mat ? parseFloat(mat.dilution) : 100;
+
+    return sum + (f.weight * (dilution / 100));
+  }, 0);
 
   const groups = {
     topo: formula.filter(f => f.note === 'topo'),
@@ -162,31 +190,45 @@ function renderFormula() {
     const groupTotal = groupItems.reduce((sum, f) => sum + f.weight, 0);
     const groupPerc = total ? (groupTotal / total * 100).toFixed(2) : 0;
 
-    // Linha de cabeçalho do grupo
     tbody.innerHTML += `
       <tr class="group-header">
-        <td colspan="5">
+        <td colspan="7">
           <strong>${groupLabels[groupKey]}: (${groupPerc}% do total)</strong>
         </td>
       </tr>
     `;
 
-    // Itens do grupo
-    groupItems.forEach((f, i) => {
+    groupItems.forEach((f) => {
+      const mat = getMaterialById(f.materialId);
+
+      const dilution = mat ? parseFloat(mat.dilution) : 100;
+
       const perc = total ? (f.weight / total * 100).toFixed(2) : 0;
       const parts = total ? (f.weight / total * 1000).toFixed(0) : 0;
+
+      // 🔥 RAW
+      const raw = f.weight * (dilution / 100);
+
+      // 🔥 % REAL
+      const rawPerc = totalRaw ? (raw / totalRaw * 100).toFixed(2) : 0;
 
       const realIndex = formula.indexOf(f);
 
       tbody.innerHTML += `
         <tr>
-          <td>${f.material}</td>
+          <td>${f.materialName}</td>
+
           <td>
             <input type="number" step="0.01" value="${f.weight}"
               onchange="updateWeight(${realIndex}, this.value)">
           </td>
+
           <td>${perc}</td>
           <td>${parts}</td>
+
+          <td>${raw.toFixed(3)}</td>
+          <td>${rawPerc}%</td>
+
           <td>
             <button class="danger" onclick="removeItem(${realIndex})">Excluir</button>
           </td>
@@ -316,17 +358,32 @@ function exportPDF() {
 
   const total = formula.reduce((sum, f) => sum + f.weight, 0);
 
+  const totalRaw = formula.reduce((sum, f) => {
+    const mat = getMaterialById(f.materialId);
+    const dilution = mat ? parseFloat(mat.dilution) : 100;
+    return sum + (f.weight * (dilution / 100));
+  }, 0);
+
   let linhas = "";
+
   formula.forEach(f => {
+    const mat = getMaterialById(f.materialId);
+    const dilution = mat ? parseFloat(mat.dilution) : 100;
+
     const perc = total ? (f.weight / total * 100).toFixed(2) : 0;
     const parts = total ? (f.weight / total * 1000).toFixed(0) : 0;
 
+    const raw = f.weight * (dilution / 100);
+    const rawPerc = totalRaw ? (raw / totalRaw * 100).toFixed(2) : 0;
+
     linhas += `
       <tr>
-        <td>${f.material}</td>
-        <td style="text-align:right;">${f.weight.toFixed(2)}</td>
-        <td style="text-align:right;">${perc}%</td>
-        <td style="text-align:right;">${parts}</td>
+        <td>${f.materialName} (${dilution}%)</td>
+        <td class="num">${f.weight.toFixed(2)}</td>
+        <td class="num">${perc}%</td>
+        <td class="num">${parts}</td>
+        <td class="num">${raw.toFixed(3)}</td>
+        <td class="num">${rawPerc}%</td>
       </tr>
     `;
   });
@@ -336,32 +393,72 @@ function exportPDF() {
     <head>
       <title>${nome}</title>
       <style>
-        body { font-family: Arial; padding: 30px; }
+        body { font-family: Arial; padding: 30px; color:#222; }
+
         h1 { margin-bottom: 5px; }
         .data { color: #666; margin-bottom: 20px; }
-        table { width:100%; border-collapse: collapse; margin-top:10px; }
-        th { text-align:left; padding:8px; border-bottom:2px solid #000; }
-        td { padding:8px; border-bottom:1px solid #ddd; }
+
+        table {
+          width:100%;
+          border-collapse: collapse;
+          margin-top:10px;
+          font-size: 14px;
+        }
+
+        th {
+          text-align:left;
+          padding:10px;
+          background:#f2f2f2;
+          border:1px solid #ccc;
+        }
+
+        td {
+          padding:8px;
+          border:1px solid #ddd;
+        }
+
+        .num {
+          text-align:right;
+        }
+
+        tr:nth-child(even) {
+          background:#fafafa;
+        }
+
+        .header {
+          border-bottom:2px solid #000;
+          margin-bottom:10px;
+          padding-bottom:5px;
+        }
+
       </style>
     </head>
     <body>
-      <h1>${nome}</h1>
-      <div class="data">${dataFormatada}</div>
+
+      <div class="header">
+        <h1>${nome}</h1>
+        <h4>Fórmula criada no Perfume Recipe CAD</h4>
+        <div class="data">${dataFormatada}</div>
+      </div>
+
       <table>
         <thead>
           <tr>
             <th>Material</th>
             <th>g</th>
             <th>%</th>
-            <th>Partes (1000)</th>
+            <th>Partes</th>
+            <th>RAW (g)</th>
+            <th>% REAL</th>
           </tr>
         </thead>
         <tbody>
           ${linhas}
         </tbody>
       </table>
+
     </body>
-    </html>
+    </html>[]
   `;
 
   const win = window.open('', '_blank');
