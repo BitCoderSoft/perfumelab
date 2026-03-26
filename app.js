@@ -69,6 +69,7 @@ function addMaterial() {
 }
 
 function renderMaterials() {
+  const filtro = document.getElementById('filterCategoria')?.value || 'Todos';
   const tbody = document.getElementById('materialsTable');
   const select = document.getElementById('materialSelect');
   tbody.innerHTML = '';
@@ -98,15 +99,23 @@ function renderMaterials() {
       const classMap = {
         'Cítrico':'category-citrico',
         'Floral':'category-floral',
+        'Frutado':'category-frutado',
         'Amadeirado':'category-amadeirado',
         'Musk':'category-musk',
         'Ambarado':'category-ambarado',
         'Gourmand':'category-gourmand',
         'Aromático':'category-aromatico',
-        'Verde':'category-verde'
+        'Verde':'category-verde',
+        'Especiaria':'category-especiaria',
       };
 
-      items.forEach(m=>{
+      let filteredItems = items;
+
+      if (filtro !== 'Todos') {
+        filteredItems = items.filter(m => m.categoria === filtro);
+      }
+
+      filteredItems.forEach(m=>{
         if(m.categoria !== currentCat){
           currentCat = m.categoria;
           const catClass = classMap[currentCat] || '';

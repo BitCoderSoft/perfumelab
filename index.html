@@ -88,19 +88,23 @@
       </div>
 
       <div class="notice" style="margin-top:15px;">
-        <b>Nota da Versão 1.1.0:</b> Cadastrar materiais (nome, diluição, data de vailidade e categoria). Cadastrar formúla usando os
+        <b>Nota da Versão 1.1.1:</b> Cadastrar materiais (nome, diluição, data de vailidade e categoria). Filtrar materiais cadastrados
+        através da categoria registrada. Cadastrar formúla usando os
         materiais. Salvar a formúla ou exportar como pdf. Visualizar a construção da formúla por tipo de presença na pirâmide 
         olfativa. Carregar a formúla salva. Realizar bacukp de segurança local
-        para nao perder os dados.
+        para nao perder os dados. 
         <br/> <br/>
         Instalação local em formato de aplicativo quando estiver em dispositivo movél. Esse formato permite o usuário utilizar a aplicação
         mesmo estando offline.
         <br/> <br/>
         Seleção de Preferência de Cor no Tema da aplicação!
+        <br/> <br/>
+        <b>ATENÇÃO:</b> O aplicativo ainda está sendo desenvolvido. Realize seus testes e validações, mas entenda que estruturas poderão ser alteradas
+        e dados poderão ser perdidos. 
       </div>
 
       <div style="margin-top:45px; font-size:12px; color:#777;">
-        © Erisvaldo Correia - 2026 - Versão 1.1.0
+        © Erisvaldo Correia - 2026 - Versão 1.1.1
       </div>
 
     </div>
@@ -133,17 +137,36 @@
       <select id="categoria">
         <option>Cítrico</option>
         <option>Floral</option>
+        <option>Frutado</option>
         <option>Amadeirado</option>
         <option>Musk</option>
         <option>Ambarado</option>
         <option>Gourmand</option>
         <option>Aromático</option>
         <option>Verde</option>
+        <option>Especiaria</option>
       </select>
     </div>
   </div>
 
   <button class="full" onclick="addMaterial()">Adicionar</button>
+
+  <div class="form-group" style="margin-top:10px;">
+    <label>Exibição da Lista de Materiais:</label>
+    <select id="filterCategoria" onchange="renderMaterials()">
+      <option value="Todos">Todos</option>
+      <option value="Cítrico">Cítrico</option>
+      <option value="Floral">Floral</option>
+      <option value="Frutado">Frutado</option>
+      <option value="Amadeirado">Amadeirado</option>
+      <option value="Musk">Musk</option>
+      <option value="Ambarado">Ambarado</option>
+      <option value="Gourmand">Gourmand</option>
+      <option value="Aromático">Aromático</option>
+      <option value="Verde">Verde</option>
+      <option value="Especiaria">Especiaria</option>
+    </select>
+  </div>
 
   <div class="table-wrapper">
     <table>
@@ -170,7 +193,7 @@
 
     <select id="materialSelect"></select>
 
-    <input id="weight" type="number" step="0.01" placeholder="g" />
+    <input id="weight" type="number" step="0.01" placeholder="gramas" />
 
     <button onclick="addToFormula()">Adicionar</button>
   </div>

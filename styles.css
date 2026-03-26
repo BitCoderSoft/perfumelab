@@ -98,12 +98,14 @@ tr:hover { background:#fafafa; }
 .category-row td { font-weight:600; }
 .category-citrico td{ background:#fff4e6; color:#a05a00; }
 .category-floral td{ background:#fde6f2; color:#a0005a; }
+.category-frutado td{ background:#ece6fd; color:#a00098; }
 .category-amadeirado td{ background:#efe6dc; color:#6b4f2a; }
 .category-musk td{ background:#f0e6ff; color:#5a3aa0; }
 .category-ambarado td{ background:#fff1cc; color:#a06a00; }
 .category-gourmand td{ background:#fbead9; color:#a0522d; }
 .category-aromatico td{ background:#e6f7f1; color:#1f7a63; }
 .category-verde td{ background:#e6fbe6; color:#2d7a2d; }
+.category-especiaria td{ background:#fdf0e6; color:#a03500; }
 
 .notice { background:#fff3cd; padding:15px; border-radius:8px; margin-bottom:15px; }
 .information { background:#cddeed; padding:15px; border-radius:8px; margin-bottom:15px; }
