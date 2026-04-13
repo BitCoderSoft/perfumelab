@@ -235,9 +235,6 @@ function renderFormula() {
           <td>${perc}</td>
           <td>${parts}</td>
 
-          <td>${raw.toFixed(3)}</td>
-          <td>${rawPerc}%</td>
-
           <td>
             <button class="danger" onclick="removeItem(${realIndex})">Excluir</button>
           </td>
@@ -246,6 +243,11 @@ function renderFormula() {
     });
   });
 }
+
+// trecho remmovido da tabela.
+// <td>${raw.toFixed(3)}</td>
+// <td>${rawPerc}%</td>
+
 
 function updateWeight(index, value) {
   formula[index].weight = parseFloat(value);
@@ -391,11 +393,12 @@ function exportPDF() {
         <td class="num">${f.weight.toFixed(2)}</td>
         <td class="num">${perc}%</td>
         <td class="num">${parts}</td>
-        <td class="num">${raw.toFixed(3)}</td>
-        <td class="num">${rawPerc}%</td>
       </tr>
     `;
   });
+
+        //  <td class="num">${raw.toFixed(3)}</td>
+        //  <td class="num">${rawPerc}%</td>
 
   const html = `
     <html>
@@ -454,11 +457,9 @@ function exportPDF() {
         <thead>
           <tr>
             <th>Material</th>
-            <th>g</th>
-            <th>%</th>
+            <th>Gramas/Gotas</th>
+            <th>% (Percentual)</th>
             <th>Partes</th>
-            <th>RAW (g)</th>
-            <th>% REAL</th>
           </tr>
         </thead>
         <tbody>
@@ -467,8 +468,11 @@ function exportPDF() {
       </table>
 
     </body>
-    </html>[]
+    </html>
   `;
+
+  //     <th>RAW (g)</th>
+  //       <th>% REAL</th>
 
   const win = window.open('', '_blank');
   win.document.write(html);
